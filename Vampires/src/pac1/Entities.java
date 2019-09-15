@@ -1,6 +1,7 @@
 package pac1;
 
 public abstract class Entities {
+	private String name;
 	private int x;
 	private int y;
 	
@@ -23,6 +24,12 @@ public abstract class Entities {
 		this.y = y;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public abstract void move(int x, int y);
 
 }
