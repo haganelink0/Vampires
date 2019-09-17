@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="pac1.Main" project="Vampires" file="/Vampires/src/pac1/Main.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="147" y="109"/>    
+    <position height="-1" width="-1" x="1025" y="97"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
