@@ -48,22 +48,25 @@ public class Dungeon {
 		m.readMovement(move);
 		if (m.getNewX() > this.dungeonMap.getWidht()) {
 			dungeonMap.getHero().setX(dungeonMap.getWidht());
+		} else if (m.getNewX() < 0) {
+			dungeonMap.getHero().setX(0);
 		} else {
 			dungeonMap.getHero().setX(m.getNewX());
 		}
 		if (m.getNewY() > this.dungeonMap.getHeight()) {
 			dungeonMap.getHero().setY(dungeonMap.getHeight());
+		} else if (m.getNewY() < 0) {
+			dungeonMap.getHero().setY(0);
 		} else {
 			dungeonMap.getHero().setY(m.getNewY());
 		}
 		this.setTurns(this.getTurns() - 1);
 		for(int i = 1; i < this.dungeonMap.getEntities().size(); i++) {
+			this.dungeonMap.getEntities().get(i).setX(m.vampireMovement(this.dungeonMap.getEntities().get(i).getX(), this.dungeonMap.getEntities().get(i).getY()).getNewX());
+			this.dungeonMap.getEntities().get(i).setY(m.vampireMovement(this.dungeonMap.getEntities().get(i).getX(), this.dungeonMap.getEntities().get(i).getX()).getNewY());
 			if (this.dungeonMap.getEntities().get(i).getX() == m.getNewX() && this.dungeonMap.getEntities().get(i).getY() == m.getNewY()) {
 				this.dungeonMap.getEntities().remove(i);
 				this.vampires--;
-			} else {
-				this.dungeonMap.getEntities().get(i).setX(m.vampireMovement(this.dungeonMap.getEntities().get(i).getX(), this.dungeonMap.getEntities().get(i).getY()).getNewX());
-				this.dungeonMap.getEntities().get(i).setY(m.vampireMovement(this.dungeonMap.getEntities().get(i).getX(), this.dungeonMap.getEntities().get(i).getX()).getNewY());
 			}
 		}
 		
