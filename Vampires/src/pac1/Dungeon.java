@@ -28,7 +28,9 @@ public class Dungeon {
 			move(movement);
 			if (turns == 0) {
 				if (this.vampires == 0) {
-					System.out.println("YOU WON!. But you run out of light. And you are in the middle of a dungeon full of vampire corpses. Maybe you didn't win that much. But you did your job");
+					System.out.println("YOU WON!. But you run out of light. "
+							+ "And you are in the middle of a dungeon full of vampire corpses. "
+							+ "Maybe you didn't win that much. But you did your job, I guess.");
 					break;
 				} else {
 					System.out.println("You run out of light. You are going to die pretty soon. I guess you lose.");
@@ -43,33 +45,50 @@ public class Dungeon {
 		
 	}
 	
+	public void movementCorrection(int i) {
+		if (this.dungeonMap.getEntities().get(i).getX() > this.dungeonMap.getWidht()) {
+			this.dungeonMap.getEntities().get(i).setX(this.dungeonMap.getWidht());
+		} else if (this.dungeonMap.getEntities().get(i).getX() < 0) {
+			this.dungeonMap.getEntities().get(i).setX(0);
+		}
+		if (this.dungeonMap.getEntities().get(i).getY() > this.dungeonMap.getHeight()) {
+			this.dungeonMap.getEntities().get(i).setY(this.dungeonMap.getHeight());
+		} else if (this.dungeonMap.getEntities().get(i).getY() < 0) {
+			this.dungeonMap.getEntities().get(i).setY(0);
+		}
+	}
+	
+	/**
+	 * @param move
+	 */
 	public void move(String move) {
 		Movement m = new Movement(dungeonMap.getHero().getX(), dungeonMap.getHero().getY());
 		m.readMovement(move);
-		if (m.getNewX() > this.dungeonMap.getWidht()) {
-			dungeonMap.getHero().setX(dungeonMap.getWidht());
-		} else if (m.getNewX() < 0) {
-			dungeonMap.getHero().setX(0);
-		} else {
-			dungeonMap.getHero().setX(m.getNewX());
-		}
-		if (m.getNewY() > this.dungeonMap.getHeight()) {
-			dungeonMap.getHero().setY(dungeonMap.getHeight());
-		} else if (m.getNewY() < 0) {
-			dungeonMap.getHero().setY(0);
-		} else {
-			dungeonMap.getHero().setY(m.getNewY());
-		}
-		this.setTurns(this.getTurns() - 1);
+		System.out.println(m);
+		this.dungeonMap.getHero().move(m.getNewX(), m.getNewY());
+		movementCorrection(0);
+		System.out.println(dungeonMap.getHero());
+		setTurns(this.getTurns() - 1);
 		for(int i = 1; i < this.dungeonMap.getEntities().size(); i++) {
-			this.dungeonMap.getEntities().get(i).setX(m.vampireMovement(this.dungeonMap.getEntities().get(i).getX(), this.dungeonMap.getEntities().get(i).getY()).getNewX());
-			this.dungeonMap.getEntities().get(i).setY(m.vampireMovement(this.dungeonMap.getEntities().get(i).getX(), this.dungeonMap.getEntities().get(i).getX()).getNewY());
-			if (this.dungeonMap.getEntities().get(i).getX() == m.getNewX() && this.dungeonMap.getEntities().get(i).getY() == m.getNewY()) {
+			if (this.dungeonMap.getEntities().get(i).getX() == this.dungeonMap.getHero().getX() && this.dungeonMap.getEntities().get(i).getY() == this.dungeonMap.getHero().getY()) {
 				this.dungeonMap.getEntities().remove(i);
 				this.vampires--;
-			}
+			} else {
+				m.readMovement(m.vampireMovement());
+				System.out.println(m);
+				this.dungeonMap.getEntities().get(i).move(m.getNewX(), m.getNewY());
+				movementCorrection(i);
+				System.out.println(this.dungeonMap.getEntities().get(i));
+				while(m.vampireColision(this.dungeonMap.getEntities().get(i))) {
+					Movement n = new Movement(dungeonMap.getHero().getX(), dungeonMap.getHero().getY());
+					m.readMovement(n.vampireMovement());
+					System.out.println(this.dungeonMap.getEntities());
+					this.dungeonMap.getEntities().get(i).move(n.getNewX(), n.getNewY());
+					movementCorrection(i);
+					System.out.println(m);
+				}
+			}			
 		}
-		
 	}
 
 	public int getTurns() {
@@ -79,4 +98,5 @@ public class Dungeon {
 	public void setTurns(int turns) {
 		this.turns = turns;
 	}
+
 }

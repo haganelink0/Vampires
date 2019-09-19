@@ -19,6 +19,8 @@ public class Human extends Entities {
 
 	@Override
 	public void move(int x, int y) {
+		setX(x);
+		setY(y);
 		// TODO Auto-generated method stub
 		
 	}

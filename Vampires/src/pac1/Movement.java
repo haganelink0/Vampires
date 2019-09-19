@@ -63,8 +63,7 @@ public class Movement {
 		this.newY = this.originalY + y;
 	}
 	
-	public Movement vampireMovement(int x, int y) {
-		Movement vampMov = new Movement( x, y);
+	public String vampireMovement() {
 		ArrayList<String> mO = new ArrayList<String>();
 		mO.add("w");
 		mO.add("s");
@@ -72,11 +71,18 @@ public class Movement {
 		mO.add("d");
 		Random rdm = new Random();
 		String mv = "";
-		for (int i = 0; i > this.movements; i++) {
+		for (int i = 0; i < this.movements; i++) {
 			mv += mO.get(rdm.nextInt(3));
 		}
-		vampMov.readMovement(mv);
-		return vampMov;
+		return mv;
+	}
+
+	public int getMovements() {
+		return movements;
+	}
+
+	public void setMovements(int movements) {
+		this.movements = movements;
 	}
 
 	@Override
@@ -85,7 +91,13 @@ public class Movement {
 				+ "]";
 	}
 	
-	
+	public boolean vampireColision(Entities vampire) {
+		if (vampire.getX() == getNewX() && vampire.getY() == getNewY()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 	
 	
 

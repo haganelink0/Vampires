@@ -43,8 +43,12 @@ public class Map {
 		Entities playerOne = new Human(0,0);
 		entities.add(playerOne);
 		for(int i = 0; i < vampires; i++) {
-			entities.add(new Vampire( randomizer.nextInt(getWidht()), randomizer.nextInt(getHeight())));
+			Entities tomas = new Vampire( randomizer.nextInt(getWidht()), randomizer.nextInt(getHeight()));
+			if (!getEntities().contains(tomas)) {
+				getEntities().add(tomas);
+			}
 		}
+		
 	}
 	
 	public Human getHero() {
@@ -75,4 +79,5 @@ public class Map {
 			System.out.println(character);
 		}
 	}
+	
 }

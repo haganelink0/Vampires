@@ -1,6 +1,5 @@
 package pac1;
 
-import java.util.Random;
 
 public class Vampire extends Entities {
 	private String name;
@@ -20,6 +19,8 @@ public class Vampire extends Entities {
 
 	@Override
 	public void move(int x, int y) {
+		setX(x);
+		setY(y);
 		// TODO Auto-generated method stub
 		
 	}
