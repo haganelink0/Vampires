@@ -58,9 +58,7 @@ public class Dungeon {
 		}
 	}
 	
-	/**
-	 * @param move
-	 */
+
 	public void move(String move) {
 		Movement m = new Movement(dungeonMap.getHero().getX(), dungeonMap.getHero().getY());
 		m.readMovement(move);
@@ -79,14 +77,15 @@ public class Dungeon {
 				this.dungeonMap.getEntities().get(i).move(m.getNewX(), m.getNewY());
 				movementCorrection(i);
 				System.out.println(this.dungeonMap.getEntities().get(i));
-				while(m.vampireColision(this.dungeonMap.getEntities().get(i))) {
-					Movement n = new Movement(dungeonMap.getHero().getX(), dungeonMap.getHero().getY());
-					m.readMovement(n.vampireMovement());
-					System.out.println(this.dungeonMap.getEntities());
-					this.dungeonMap.getEntities().get(i).move(n.getNewX(), n.getNewY());
-					movementCorrection(i);
-					System.out.println(m);
-				}
+// esta es la parte del código que no funciona.				
+//				while(m.vampireColision(this.dungeonMap.getEntities().get(i))) {
+//					Movement n = new Movement(dungeonMap.getHero().getX(), dungeonMap.getHero().getY());
+//					m.readMovement(n.vampireMovement());
+//					System.out.println(this.dungeonMap.getEntities());
+//					this.dungeonMap.getEntities().get(i).move(n.getNewX(), n.getNewY());
+//					movementCorrection(i);
+//					System.out.println(m);
+//				}
 			}			
 		}
 	}
