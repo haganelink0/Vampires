@@ -58,36 +58,36 @@ public class Dungeon {
 		}
 	}
 	
+	public void vampireFix(Movement m) {
+		while(true) {
+			for(int i = 1; i < this.dungeonMap.getEntities().size(); i++) {
+				if(m.vampireColision(this.dungeonMap.getEntities().get(i))) {
+					m.readMovement(m.vampireMovement());
+					this.dungeonMap.getEntities().get(i).move(m.getNewX(), m.getNewY());
+					movementCorrection(i);
+				}
+			}
+			if (this.dungeonMap.differentEntities()) {
+				break;
+			}
+		}	
+	}
+	
 
 	public void move(String move) {
 		Movement m = new Movement(dungeonMap.getHero().getX(), dungeonMap.getHero().getY());
 		m.readMovement(move);
-		System.out.println(m);
 		this.dungeonMap.getHero().move(m.getNewX(), m.getNewY());
 		movementCorrection(0);
-		System.out.println(dungeonMap.getHero());
 		setTurns(this.getTurns() - 1);
 		for(int i = 1; i < this.dungeonMap.getEntities().size(); i++) {
 			if (this.dungeonMap.getEntities().get(i).getX() == this.dungeonMap.getHero().getX() && this.dungeonMap.getEntities().get(i).getY() == this.dungeonMap.getHero().getY()) {
 				this.dungeonMap.getEntities().remove(i);
 				this.vampires--;
-			} else {
-				m.readMovement(m.vampireMovement());
-				System.out.println(m);
-				this.dungeonMap.getEntities().get(i).move(m.getNewX(), m.getNewY());
-				movementCorrection(i);
-				System.out.println(this.dungeonMap.getEntities().get(i));
-// esta es la parte del código que no funciona.				
-//				while(m.vampireColision(this.dungeonMap.getEntities().get(i))) {
-//					Movement n = new Movement(dungeonMap.getHero().getX(), dungeonMap.getHero().getY());
-//					m.readMovement(n.vampireMovement());
-//					System.out.println(this.dungeonMap.getEntities());
-//					this.dungeonMap.getEntities().get(i).move(n.getNewX(), n.getNewY());
-//					movementCorrection(i);
-//					System.out.println(m);
-//				}
-			}			
+			}
+						
 		}
+		vampireFix(m);
 	}
 
 	public int getTurns() {

@@ -80,4 +80,20 @@ public class Map {
 		}
 	}
 	
+	public boolean differentEntities() {
+		int t = 0;
+		for (Entities e : entities) {
+			for (int i = 0; i < entities.size(); i++) {
+				if (e.getX() == entities.get(i).getX() && e.getY() == entities.get(i).getY()) {
+					t++;
+				}
+			}
+		}
+		if (t > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }
